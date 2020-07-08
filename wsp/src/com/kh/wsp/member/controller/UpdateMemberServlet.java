@@ -8,37 +8,34 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kh.wsp.member.model.service.MemberService;
 import com.kh.wsp.member.model.vo.Member;
 
-@WebServlet("/member/signUp.do")
-public class SignUpServlet extends HttpServlet {
+@WebServlet("/member/updateMember.do")
+public class UpdateMemberServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
        
-    public SignUpServlet() {
-        super();
-       
-    }
-
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		
-		// 1. POST 방식으로 전달받은 데이터 문자 인코딩 변경
-		//request.setCharacterEncoding("UTF-8");
 		
-		// 2. 전송값(파라미터)를 모두 변수에 저장
-		String memberId = request.getParameter("id");
-		String memberPwd = request.getParameter("pwd1");
-		String memberName = request.getParameter("name");
+		// 회원정보 수정에 필요한 파라미터, 세션 값 변수에 저장하기
 		
+		// 1 ) HttpSession에서 로그인 정보를 얻어옴.
+		HttpSession session = request.getSession();
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		
+		
+		// 2 ) 파라미터를 얻어옴
 		String phone1 = request.getParameter("phone1");
 		String phone2 = request.getParameter("phone2");
 		String phone3 = request.getParameter("phone3");
 		
-		
-		// 전화번호를 구분자 '-'를 이용하여 합침
-		String phoneNumber = phone1 +"-"+ phone2 +"-"+ phone3;
+		String memberPhone = phone1 + "-" + phone2 + "-" + phone3;
 		
 		String memberEmail = request.getParameter("email");
 		
@@ -46,39 +43,55 @@ public class SignUpServlet extends HttpServlet {
 		String address1 = request.getParameter("address1");
 		String address2 = request.getParameter("address2");
 		
-		// 주소를 ","를 구분자로 하여 합치기
 		String memberAddress = post + "," + address1 + "," + address2;
 		
-		// 관심분야가 하나도 선택이 되지 않았을 경우를 대비해 null 처리
 		String[] interest = request.getParameterValues("memberInterest");
 		String memberInterest = null;
 		
+	
+		
+		
 		if(interest != null) {
+			
 			memberInterest = String.join(",", interest);
+			
 		}
 		
-		// -> 비밀번호를 제외한 매개변수 6개 짜리 생성자를 생성
-		// -> 생성자를 이용해 값 6개 세팅 후 setter를 이용해 비밀번호도 세팅
-		Member member = new Member(memberId, memberName, phoneNumber, memberEmail, memberAddress, memberInterest);
 		
-		member.setMemberPwd(memberPwd);
+		// 아이디, 전화번호, 이메일, 주소, 관심분야
+		Member member = new Member(loginMember.getMemberId(), memberPhone, memberEmail, memberAddress, memberInterest);
 		
+		int result = 0;
 		
 		try {
-			int result = new MemberService().signUp(member);
 			
+			result = new MemberService().updateMember(member);
 			String status = null;
 			String msg = null;
 			String text = null;
 			
+				
+			
 			if(result > 0) {
 				status = "success";
-				msg = "회원 가입 성공!";
-				text = "회원 가입을 환영합니다!";
-			}else {
+				msg = "정보 수정 완료";
+				text = "즐거운 이용 부탁드립니다.";
+						
+				loginMember.setMemberPhone(memberPhone);
+				loginMember.setMemberEmail(memberEmail);
+				loginMember.setMemberAddress(memberAddress);
+				loginMember.setMemberInterest(memberInterest);
+				
+				
+				session.setAttribute("loginMember", loginMember);
+				
+			} else {
+				
 				status = "error";
-				msg = "회원 가입 실패!";
-				text = "회원 가입 중 문제가 발생했습니다! 문제가 지속 될 경우 문의 바랍니다.";
+				msg = "정보 수정 실패~!";
+				text = "나는 바보얌";
+				
+				
 			}
 			
 			request.getSession().setAttribute("status", status);
@@ -86,16 +99,20 @@ public class SignUpServlet extends HttpServlet {
 			request.getSession().setAttribute("text", text);
 			
 			
-			// 회원 가입 성공 또는 실패 시 메인 페이지 주소로 돌아가도록 요청
-			response.sendRedirect(request.getContextPath());
 			
 			
 			
+		}catch(Exception e) {
 			
-		}catch	(Exception e) {
+			
+
+			
+			// 리다이렉트 방식은 이전 요청 객체 request 를 폐기하므로
+			// 다음 페이지에 메세지를 전달하고 싶을 때 Session을 임시로 사용하는 방법이 있다.
+			
 			e.printStackTrace();
 			
-			request.setAttribute("errorMsg", "회원 가입 중 오류 발생");
+			request.setAttribute("errorMsg", "정보 수정 중 오류 발생");
 			
 			String path = "/WEB-INF/views/common/errorPage.jsp";
 			
@@ -103,7 +120,15 @@ public class SignUpServlet extends HttpServlet {
 			view.forward(request, response);
 			
 			
+			
 		}
+		
+		response.sendRedirect("myPage.do");
+		
+		
+		
+		
+		
 		
 		
 		
@@ -113,9 +138,8 @@ public class SignUpServlet extends HttpServlet {
 	}
 
 	
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+
 		doGet(request, response);
 	}
 

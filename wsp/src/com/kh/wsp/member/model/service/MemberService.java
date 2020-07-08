@@ -104,6 +104,43 @@ public class MemberService {
 		return result;
 	}
 
+
+
+	public int updateMember(Member member) throws Exception{
+		
+		
+		Connection conn = getConnection();
+		int result = 0;
+		
+		try {
+			
+			result = dao.updateMember(member,conn);
+			
+			
+		}finally {
+			
+			if(result > 0) {
+				conn.commit();
+			}else {
+				conn.rollback();
+			}
+			
+			
+		}
+		
+		conn.close();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return result;
+	}
+
 }
 
 

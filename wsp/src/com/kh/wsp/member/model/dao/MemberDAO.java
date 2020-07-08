@@ -181,6 +181,64 @@ public class MemberDAO {
 		return result;
 	}
 
+
+
+
+	public int updateMember(Member member, Connection conn) throws Exception{
+
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
+		
+		String query = prop.getProperty("updateMember");
+		
+		
+		
+		try {
+			
+			pstmt = conn.prepareStatement(query);
+			
+			
+			pstmt.setString(1, member.getMemberPhone());
+			pstmt.setString(2, member.getMemberEmail());
+			pstmt.setString(3, member.getMemberAddress());
+			pstmt.setString(4, member.getMemberInterest());
+			pstmt.setString(5, member.getMemberId());
+			
+			result = pstmt.executeUpdate();
+			
+			
+			
+			
+			
+			
+			
+		}finally {
+			
+			
+			pstmt.close();
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return result;
+	}
+
 	
 	
 	

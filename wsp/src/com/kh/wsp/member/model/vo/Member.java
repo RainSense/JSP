@@ -3,6 +3,11 @@ package com.kh.wsp.member.model.vo;
 import java.sql.Date;
 
 public class Member {
+	
+	
+	
+	
+	
 	public Member(String memberId, String memberName, String memberPhone, String memberEmail, String memberAddress,
 			String memberInterest) {
 		super();
@@ -13,6 +18,29 @@ public class Member {
 		this.memberAddress = memberAddress;
 		this.memberInterest = memberInterest;
 	}
+	
+	
+	
+	
+	
+	
+
+
+	public Member(String memberId, String memberPhone, String memberEmail, String memberAddress,
+			String memberInterest) {
+		super();
+		this.memberId = memberId;
+		this.memberPhone = memberPhone;
+		this.memberEmail = memberEmail;
+		this.memberAddress = memberAddress;
+		this.memberInterest = memberInterest;
+	}
+
+
+
+
+
+
 
 
 	private int memberNo;		//회원 번호
