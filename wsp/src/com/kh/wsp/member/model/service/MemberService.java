@@ -141,6 +141,115 @@ public class MemberService {
 		return result;
 	}
 
+
+
+	public int updatePwd(Member member, String newPwd) throws Exception{
+		
+		
+		Connection conn = getConnection();
+		
+		
+		// 1. 현재 비밀번호 일치 여부 확인
+		int result = dao.checkPwd(conn, member);
+		
+		
+		if(result > 0) { // 현재 비밀번호 일치
+			// 2. 일치할 경우 비밀번호 수정
+
+
+			// member객체 재활용(
+			member.setMemberPwd(newPwd);
+			
+			result = dao.updatePwd(conn, member);
+			
+			if(result > 0)	conn.commit();
+			else			conn.rollback();
+			
+			
+		}else { // 현재 비밀번호가 일치하지 않는 경우
+			
+			
+			result = -1;  // 비밀번호 불일치 코드로 -1 사용
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		return result;
+	}
+
+
+
+	/**
+	 * @param member
+	 * @param newPwd
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updatePwd2(Member member, String newPwd) throws Exception{
+
+		Connection conn = getConnection();
+		
+		
+		// 1. 현재 비밀번호 일치 여부 확인
+		int result = dao.updatePwd(conn, member,newPwd);
+		
+		if(result > 0) conn.commit();
+		else conn.rollback();
+		
+		
+		
+		conn.close();
+		
+		
+		
+		
+		
+		
+		
+		return result;
+	}
+
+
+
+	public int seccessionMember(Member member) throws Exception{
+
+		int result = 0;
+		
+		Connection conn = getConnection();
+		
+		try {
+			
+			result = dao.checkPwd(conn, member);
+			
+			if(result>0) {
+				
+				result = dao.seccesionMember(conn,member);
+				conn.commit();
+				
+				
+			}else {
+				result = -1;
+				conn.rollback();
+			}
+			
+			
+		}finally {
+			
+			
+		}
+		
+
+		
+		
+		return result;
+	}
+
 }
 
 

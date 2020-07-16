@@ -39,14 +39,16 @@
                             <!-- autocomplete="off" : input 태그 자동완성 기능을 끔 -->
                             
                             <!-- 중복체크 여부 판단을 위한 hidden 타입 요소 -->
-                            <input type="hidden" name="idDup" id="idDup" value="false">
+                           <!--   <input type="hidden" name="idDup" id="idDup" value="false"> -->
                         </div>
+                        <div id="checkId"></div>
                         
                         <!-- ajax 중복검사 시 필요없음 -->
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-primary" id="idDupCheck">중복검사</button>
-                           <!--  duplicate - 중복의 -->
-                        </div>
+                        
+                     <!--        <div class="col-md-3">
+                        <button type="button" class="btn btn-primary" id="idDupCheck">중복검사</button>  -->
+                           <!--  duplicate - 
+                        </div>중복의 -->
                     </div>
 
 
@@ -246,6 +248,7 @@
 			// 정규표현식
 			
 			// jQuery 변수 : 변수에 직접적으로 jQuery메소드를 사용할 수 있음.
+			var $id = $("#id");
 			var $pwd1 = $("#pwd1");
 			var $pwd2 = $("#pwd2");
 			var $pwd = $("#pwd1, #pwd2");
@@ -265,14 +268,56 @@
 				
 				window.open("idDupForm.do", "idDupForm", "width=450, height=250");
 										// 팝업창 요청 주소			팝업창의 이름(name)				팝업창 크기 설정
-				
-				
-				
 			});
+			
+			
 			
 			$("#id").on("input",function(){
 				
-				if($("#idDup").val()=="true"){
+				
+				// 아이디 유효성 검사
+				// 첫글자 영어 소문자
+				
+				var regExp = /^[a-z][a-zA-z\d]{5,11}$/;
+				
+				if(!regExp.test($id.val())){
+					$("#checkId").text("유효하지 않은 아이디 형식입니다.").css("color","red");
+					signUpCheckid = false;
+				}else{ // 유효한 아이디 형식일 때
+					$.ajax({
+						
+					url : "idDupCheck.do",
+					date : {"id": $id.val()},
+					type : "get",
+					success : function(result){
+						if(result == 0){
+						$("#checkId").text("사용 가능한 아이디 입니다.").css("color","green");
+						signUpCheck.id = true;}
+						
+						else{
+							$("#checkId").text("이미 존재하는 아이디입니다..").css("color","red");
+							signUpCheck.id = false;}
+							
+						
+						
+					}, error : function(){
+						console.log("ajax 통신 실패");
+					}
+						
+						
+					});
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			/*	if($("#idDup").val()=="true"){
 					
 					// hidden 타입 태그 값이 true(중복 검사가 성공적으로 진행된 상태) 일때
 					// -> 검사 완료 된 값을 수정하려고 할 경우에
@@ -280,9 +325,8 @@
 					
 					$("#idDup").val("false");
 					signUpCheck.id = false;
-					
-					
 				}
+				*/	
 				
 			})
 			
@@ -389,8 +433,8 @@
 		function validate(){
 			
 			// 아이디 중복 검사 결과 확인
-			if( $("#idDup").val() == "true")	signUpCheck.id = true;
-			else				  				signUpCheck.id = false;
+			//if( $("#idDup").val() == "true")	signUpCheck.id = true;
+			//else				  				signUpCheck.id = false;
 			
 			
 			

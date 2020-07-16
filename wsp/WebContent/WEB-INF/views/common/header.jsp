@@ -73,7 +73,7 @@ Member loginMember = (Member)session.getAttribute("loginMember");
 		swal({
 			icon : "<%=status%>",
 			title : "<%=msg%>",
-			text : "<%=text%>",	
+			text : "<%=text != null ? text : ""%>",	
 			
 		});
 		
@@ -107,23 +107,23 @@ Member loginMember = (Member)session.getAttribute("loginMember");
 	<!-- Navigation으로 된 header -->
 	<div class="header navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="<%=request.getContextPath()%>">WebServer Project</a>
+			<a class="navbar-brand" href="<%=request.getContextPath()%>">Better Meet</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 				  <li class="nav-item">
-				    <a class="nav-link" href="#">Notice</a>
+				    <a class="nav-link" href="<%=request.getContextPath()%>/notice/list.do">공지사항</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="#">Notice(exercise)</a>
+				    <a class="nav-link" href="<%=request.getContextPath()%>/noticeEx/list.do">모임 상세보기</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="#">Board</a>
+				    <a class="nav-link" href="#">추천 모임</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="#">Board(exercise)</a>
+				    <a class="nav-link" href="#">게시판</a>
 				  </li>
 				  
 				  <%-- 세션에서 login 정보를 얻어왔는데 null 이였다.== 로그인이 안되어 있을 때 --%>
@@ -131,7 +131,7 @@ Member loginMember = (Member)session.getAttribute("loginMember");
 				  <li class="nav-item active">
 				  
 				 
-				    <a class="nav-link" data-toggle="modal" href="#modal-container-1">Login</a>
+				    <a class="nav-link" data-toggle="modal" href="#modal-container-1">로그인</a>
 				  </li>
 				<%}	else{ %>	  
 				  <li class="nav-item active">

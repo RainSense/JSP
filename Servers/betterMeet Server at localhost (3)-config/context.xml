@@ -26,12 +26,14 @@
 	    auth = "Container"
 	    type = "javax.sql.DataSource"
 		driverClassName = "oracle.jdbc.OracleDriver"
-		url="jdbc:oracle:thin:@127.0.0.1:1521"
-		username = "betterMeet"
-		password = "betterLife"
+		url="jdbc:oracle:thin:@115.90.212.22:xe"
+		username = "btm"
+		password = "btm"
 		maxIdle = "10"
 		maxTotal = "50"
 		maxWaitMillis = "-1"
+		
+		
 
 
     />
