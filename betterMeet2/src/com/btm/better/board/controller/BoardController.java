@@ -15,7 +15,7 @@ import com.btm.better.board.model.service.FreeBoardService;
 import com.btm.better.board.model.vo.FreeBoard;
 
 
-@WebServlet("/board/boardView.do")
+@WebServlet("/board/*")
 public class BoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,6 +26,15 @@ public class BoardController extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
+		String path = request.getRequestURL().substring(40);
+		
+		
+		
+		
+		System.out.println(path);
+		System.out.println(request.getContextPath().length());
+		
+		if(path.equals("boardView.do")) {
 		List<FreeBoard> fboardList = new ArrayList();
 		
 		try {
@@ -50,6 +59,42 @@ public class BoardController extends HttpServlet {
 		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/board/freeBoard.jsp");
 		
 		view.forward(request, response);
+		}
+		
+		
+		
+		
+		else if (path.equals("fBoardWrite.do")) {
+			
+			
+			path = "/WEB-INF/views/board/freeBoardWrite.jsp";
+			
+			
+			RequestDispatcher view = request.getRequestDispatcher(path);
+			
+			
+			view.forward(request, response);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 	}

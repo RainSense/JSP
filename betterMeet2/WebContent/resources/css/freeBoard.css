@@ -22,7 +22,7 @@
 
         #board_wrap{
 
-            margin-left: 10%;
+            margin-left: 20%;
 
             width: 85%;
             height: 80%;
@@ -51,6 +51,8 @@
         form{
             display: inline-block;
         }
+
+		
 
         .free_board_notice{
             
@@ -133,7 +135,7 @@
         
         .my-5{
         	
-        margin-left : 36%;
+        margin-left : 50%;
         
         }
 
