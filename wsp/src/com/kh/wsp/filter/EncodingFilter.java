@@ -66,7 +66,7 @@ public class EncodingFilter implements Filter {
 		
 		
 		//2. 응답 데이터 mime type, 문자 인코딩 지정
-		response.setContentType("text/html, charset = UTF-8");
+		response.setContentType("text/html; charset = UTF-8");
 
 		
 		

@@ -117,13 +117,13 @@ Member loginMember = (Member)session.getAttribute("loginMember");
 				    <a class="nav-link" href="<%=request.getContextPath()%>/notice/list.do">공지사항</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="<%=request.getContextPath()%>/noticeEx/list.do">모임 상세보기</a>
+				    <a class="nav-link" href="<%=request.getContextPath()%>/noticeEx/list.do">noticeEx</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="#">추천 모임</a>
+				    <a class="nav-link" href="#">게시판 연습</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" href="#">게시판</a>
+				    <a class="nav-link" href="<%=request.getContextPath()%>/board/list.do?type=2">게시판</a>
 				  </li>
 				  
 				  <%-- 세션에서 login 정보를 얻어왔는데 null 이였다.== 로그인이 안되어 있을 때 --%>

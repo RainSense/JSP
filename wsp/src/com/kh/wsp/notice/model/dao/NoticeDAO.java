@@ -56,6 +56,8 @@ public class NoticeDAO {
 		
 		String query = prop.getProperty("selectList");
 		
+		
+		
 		try {
 			
 			
@@ -78,6 +80,8 @@ public class NoticeDAO {
 				Date noticeModifyDate = rset.getDate(5);
 				
 				notice = new Notice(noticeNo, noticeTitle, memberId, readCount,noticeModifyDate );
+				
+				notice.setReplyCount(rset.getInt("REPLY_COUNT"));
 				
 				list.add(notice);
 				

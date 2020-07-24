@@ -61,7 +61,10 @@
 							<%for(Notice notice : list) {%>
 									<tr>
 										<td><%=notice.getNoticeNo() %></td>
-										<td><%=notice.getNoticeTitle() %></td>
+										<td><%=notice.getNoticeTitle() %>
+											[<%=notice.getReplyCount()%>]
+										
+										</td>
 										<td><%=notice.getMemberId() %></td>
 										<td><%=notice.getReadCount() %></td>
 										<td><%=notice.getNoticeModifyDate() %></td>

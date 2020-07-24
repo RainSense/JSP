@@ -63,6 +63,23 @@ public class Member {
 	
 	
 	
+	public Member(String memberId, String memberName, String memberEmail, String memberInterest,
+			Date memberEnrollDate) {
+		super();
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberEmail = memberEmail;
+		this.memberInterest = memberInterest;
+		this.memberEnrollDate = memberEnrollDate;
+	}
+
+
+
+
+
+
+
+
 	public Member(String memberId, String memberPwd) {
 		super();
 		this.memberId = memberId;
